@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Maze Game</title>
+  <style>
+    body {
+      font-family: monospace;
+      white-space: pre;
+      background-color: black;
+      color: white;
+    }
+    #game {
+      line-height: 1.2;
+    }
+  </style>
+</head>
+<body>
+  <div id="game"></div>
+
+  <script>
+    // Define Module before loading maze.js
+    var Module = {
+      print: (function() {
+        const gameDiv = document.getElementById('game');
+        return function(text) {
+          gameDiv.textContent += text + "\n"; // append instead of overwrite
+        };
+      })(),
+      printErr: function(text) {
+        console.error(text);
+      },
+      onRuntimeInitialized: function() {
+        // Listen for keyboard input once runtime is ready
+        document.addEventListener('keydown', (event) => {
+          Module.ccall('handleInput', null, ['number'], [event.keyCode]);
+        });
+      }
+    };
+  </script>
+
+  <script src="maze.js"></script>
+</body>
+</html>
